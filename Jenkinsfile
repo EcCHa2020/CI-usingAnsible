@@ -7,50 +7,31 @@ pipeline {
     }
      
     stages {
-      stage('checkout') {
+        stage('checkout') {
            steps {
-             
-                git branch: 'master', url: 'https://github.com/devops4solutions/CI-example.git'
-             
-          }
+				git branch: 'master', url: 'https://github.com/devops4solutions/CI-example.git'
+			}
         }
-         stage('Tools Init') {
+        stage('Tools Init') {
             steps {
                 script {
                     echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-               def tfHome = tool name: 'Ansible'
-                env.PATH = "${tfHome}:${env.PATH}"
-                 sh 'ansible --version'
-                    
-            }
+                    echo "MVN_HOME = ${MVN_HOME}"
+					def tfHome = tool name: 'Ansible'
+					env.PATH = "${tfHome}:${env.PATH}"
+					sh 'ansible --version'
+                }
             }
         }
-     
-        
-         stage('Execute Maven') {
-           steps {
-             
-                sh 'mvn package'             
-          }
-        }
-        
-        
-         
-        
-        
-        
-        stage('Ansible Deploy') {
-             
+        stage('Execute Maven') {
             steps {
-                 
-             
-               
-               sh "ansible-playbook main.yml -i inventories/dev/hosts --user jenkins --key-file ~/.ssh/id_rsa"
-
-               
-            
-            }
+				sh 'mvn package'             
+			}
         }
-    }
+		stage('Ansible Deploy') {
+            steps {
+				sh "ansible-playbook main.yml -i inventories/dev/hosts -- user jenkins --key-file ~/.ssh/id_rsa"
+			}
+		}
+	}
 }
