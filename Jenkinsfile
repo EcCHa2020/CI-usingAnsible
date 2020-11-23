@@ -16,7 +16,6 @@ pipeline {
 			steps {
                 		script {
                     			echo "PATH = ${PATH}"
-                    			echo "MVN_HOME = ${MVN_HOME}"
 					def tfHome = tool name: 'Ansible'
 					env.PATH = "${tfHome}:${env.PATH}"
 					sh 'ansible --version'
