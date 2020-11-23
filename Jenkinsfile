@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('checkout') {
            steps {
-				git branch: 'master', url: 'https://github.com/devops4solutions/CI-example.git'
+				git branch: 'development', url: 'https://github.com/EcCHa2020/CI-usingAnsible.git'
 			}
         }
         stage('Tools Init') {
